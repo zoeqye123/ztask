@@ -1,19 +1,19 @@
-# 🧠 TaskBrain
+# 🧠 zTask
 
-**用 Obsidian 驱动 AI 执行任务。** 把模糊的想法变成 AI 能准确执行的指令，执行完了归档，沉淀为下一个任务的上下文。
+**把"我想做 X"变成一个结构完整的 Task 文件。**
+
+zTask 只做一件事：帮助制定 Task。不执行、不管理任务进度、不负责完成。
 
 ---
 
-## 核心循环
+## 核心
 
 ```
-制定 Task（Obsidian）
+💬 "我想做 X"
        ↓
-扫描路径上下文（scan-paths.sh）
+📋 结构完整的 Task 文件
        ↓
-AI 执行 Task + 路径上下文
-       ↓
-交付物 → Archive → 新 Task
+丢给任何 AI 执行（用户自己决定用哪个）
 ```
 
 ---
@@ -26,15 +26,17 @@ AI 执行 Task + 路径上下文
 # Task: 竞品分析｜差异化策略
 
 ## 背景
-我们需要搞清楚竞品的差异化路线。
+我们需要搞清楚竞品的差异化路线，为下季度产品方向提供依据。
 
 ## 执行上下文
 | 字段 | 值 |
 |------|-----|
 | **📁 执行文件夹** | `~/projects/strategy/` |
+| **🛠 关联 Skills** | `research` |
 
 ## 目标
 - [ ] 完成 5 家主要竞品的差异化分析
+- [ ] 输出 1 页策略摘要
 
 ## 执行步骤
 ### Phase 1 · 竞品调研
@@ -48,89 +50,33 @@ AI 执行 Task + 路径上下文
 
 ## 5 分钟上手
 
-### 第一步：安装 Tasks 插件
-`设置 → 社区插件 → 搜索 `Tasks` → 安装 → 启用`
-
-### 第二步：克隆仓库
+### 第一步：克隆仓库
 ```bash
-git clone https://github.com/YOUR_USERNAME/taskbrain.git ~/taskbrain
+git clone https://github.com/YOUR_USERNAME/ztask.git ~/ztask
 ```
 
-### 第三步：扫描路径上下文
+### 第二步：扫描路径上下文
 ```bash
-cd ~/taskbrain
+cd ~/ztask
 ./scripts/scan-paths.sh           # 生成 paths-context.md
 ```
 
-### 第四步：新建 Task
+### 第三步：让 AI 制定 Task
 
-把 `obsidian-templates/Task模板.md` 复制到 Vault 的 `01 Tasks/` 目录，然后新建 Task 文件。
-
-### 第五步：丢给 AI
-
-把 **Task 内容 + paths-context.md** 一起粘贴给 AI，它就知道在哪工作、做什么。
-
-### 第六步：安装 Agent Skill（让 AI 更聪明）
-
-**OpenClaw：**
-```bash
-cp -r skills/taskbrain ~/.qclaw-oversea/skills/
-```
-
-**Claude Code / 通用 AI：**
-在会话开头说：`请先读取 paths-context.md 和你的 Task 文件，然后按 Task 执行。`
-
----
-
-## 完整流程图
+把 `skills/taskbrain/SKILL.md` 作为系统提示，告诉 AI：
 
 ```
-┌──────────────────────────────────┐
-│  📋 制定 Task（Obsidian 新建.md） │
-└──────────────┬───────────────────┘
-               ▼
-┌──────────────────────────────────┐
-│  💻 ./scan-paths.sh → paths-context.md │
-└──────────────┬───────────────────┘
-               ▼
-        把两者一起粘贴给 AI
-               │
-               ▼
-┌──────────────────────────────────┐
-│  🤖 AI 执行                       │
-│  - 读取 paths-context.md          │
-│  - 在执行文件夹中工作             │
-│  - 按 Phase 顺序执行              │
-│  - 交付物写入磁盘                │
-└──────────────┬───────────────────┘
-               ▼
-┌──────────────────────────────────┐
-│  ✅ 更新 signpost 行（- [x] ✅）  │
-│  📦 移入 history/                 │
-└──────────────────────────────────┘
+请帮我把"我想做竞品差异化分析"制定成一个 Task。
 ```
 
----
+AI 会：
+1. 提问澄清（目标/位置/约束）
+2. 生成完整的 Task 文件
+3. 告知存放路径
 
-## 文件结构
+### 第四步：拿到 Task 后
 
-```
-taskbrain/
-├── README.md
-├── TASK-FORMAT.md
-├── scripts/
-│   └── scan-paths.sh          ← 扫描关键路径
-├── skills/
-│   └── taskbrain/
-│       ├── SKILL.md           ← Agent 执行规范
-│       └── README.md          ← Skill 安装指南
-├── examples/
-│   ├── Task-竞品分析.md
-│   ├── Task-API服务开发.md
-│   └── Task-知识整理-主题笔记.md
-└── obsidian-templates/
-    └── Task模板.md
-```
+用户自己决定怎么执行——丢给 Claude / GPT / OpenClaw / 任何 AI。
 
 ---
 
@@ -139,8 +85,9 @@ taskbrain/
 | 符号 | 含义 |
 |------|------|
 | `🔺` | 高优先级 |
+| `🔻` | 中优先级 |
 | `📅 YYYY-MM-DD` | 截止日期 |
-| `📁 /路径/` | AI 执行时的**工作目录** |
+| `📁 /路径/` | AI 执行时的工作目录 |
 | `🏷️ #task` | 标签 |
 | `- [x] ✅ 日期` | 已完成 |
 
@@ -148,14 +95,42 @@ taskbrain/
 
 ---
 
-## 为什么比提示词好？
+## 文件结构
 
-| | 提示词 | TaskBrain |
-|--|--------|----------|
-| 上下文 | 每次手动复制 | **持久化，跨会话继续** |
-| 文件位置 | 要额外描述 | **执行上下文直接告知 AI** |
-| 交付物 | 存在对话里 | **写入磁盘，归档沉淀** |
-| 循环 | 每次重来 | **每次产出 → 下次上下文** |
+```
+ztask/
+├── README.md
+├── TASK-FORMAT.md            ← Task 格式规范
+├── scripts/
+│   └── scan-paths.sh        ← 扫描电脑关键路径
+└── skills/taskbrain/
+    ├── SKILL.md             ← AI 制定 Task 的规范
+    └── README.md             ← Skill 安装指南
+```
+
+---
+
+## zTask 做什么
+
+✅ 制定 Task（把模糊想法变成结构化指令）
+✅ 生成执行上下文（scan-paths.sh）
+✅ Task 格式规范（TASK-FORMAT.md）
+
+## zTask 不做什么
+
+❌ 执行 Task
+❌ 管理任务进度
+❌ 追踪完成状态
+
+---
+
+## 为什么需要这个？
+
+因为"我想做 X"不是一个好指令。
+
+AI 需要知道：在哪做？做什么？分几步？验收标准是什么？
+
+zTask 让 AI 帮你把这些问清楚，然后生成一个结构完整的 Task 文件。
 
 ---
 
