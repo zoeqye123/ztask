@@ -52,6 +52,8 @@ bash scripts/scan-paths.sh paths-context.md
 
 > 脚本位于 zTask 仓库 `scripts/scan-paths.sh`，扫描 Git 项目、AI 工具 Skills/MCP 与 Obsidian Vault，输出 `paths-context.md`。依赖：bash + python3。
 
+
+
 ### Step 3: 生成 Task
 
 按以下模板生成，**必须包含**：背景、执行上下文、目标（checkbox）、Phase 步骤、验收标准。
@@ -81,6 +83,8 @@ bash scripts/scan-paths.sh paths-context.md
 - [ ] {可验证的标准2}
 ```
 
+
+
 ### Step 4: 输出
 
 1. 输出完整 Task 文件内容（Markdown 格式）
@@ -96,6 +100,8 @@ bash scripts/scan-paths.sh paths-context.md
    下一步由你决定——用哪个 AI、用什么方式执行。
 ```
 
+
+
 ## 禁止事项
 
 - ❌ 不问清楚就生成（"做好一点"不算 Task）
@@ -103,14 +109,15 @@ bash scripts/scan-paths.sh paths-context.md
 - ❌ 超出制定范围，主动执行或管理任务
 - ❌ 不告知存放路径
 
+
+
 ## 文件路径参考
 
-| 文件 | 路径 |
-|------|------|
-| 路径上下文 | `paths-context.md`（同目录下，由脚本生成） |
-| 扫描脚本 | `scripts/scan-paths.sh`（仓库根目录） |
-| Task 格式规范 | `TASK-FORMAT.md` |
 
----
+| 文件        | 路径                             |
+| --------- | ------------------------------ |
+| 路径上下文     | `paths-context.md`（同目录下，由脚本生成） |
+| 扫描脚本      | `scripts/scan-paths.sh`（仓库根目录） |
+| Task 格式规范 | `TASK-FORMAT.md`               |
 
-*zTask Agent Skill v1 — 只负责制定，不执行*
+
