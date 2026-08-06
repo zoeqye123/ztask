@@ -1,5 +1,5 @@
 ---
-name: ztask
+name: ztask_cn
 description: 将模糊想法转化为结构化的可执行 Task 文件（Markdown 格式），遵循 zTask 任务规范，包含执行上下文、Phase 步骤和验收标准。可选运行 scan-paths.sh 生成 paths-context.md 以了解系统环境。当用户说"制定 Task"、"写个任务"、"我想做 X"、"把这个想法变成任务"，或需要生成结构化任务文件时使用。zTask 只负责制定，不负责执行。
 ---
 
@@ -47,10 +47,10 @@ Task Progress:
 - 若不存在且用户需要基于本机环境制定任务（如"帮我找个合适的目录执行"），运行扫描脚本生成：
 
 ```bash
-bash scripts/scan-paths.sh paths-context.md
+bash ../scripts/scan-paths.sh paths-context.md
 ```
 
-> 脚本位于 zTask 仓库 `scripts/scan-paths.sh`，扫描 Git 项目、AI 工具 Skills/MCP 与 Obsidian Vault，输出 `paths-context.md`。依赖：bash + python3。
+> 脚本位于 zTask 仓库根目录 `scripts/scan-paths.sh`（本 Skill 目录为其子目录，故用相对路径 `../scripts/scan-paths.sh` 引用；若单独安装本 Skill，请将 `scripts/` 一并复制并调整路径）。扫描 Git 项目、AI 工具 Skills/MCP 与 Obsidian Vault，输出 `paths-context.md`。依赖：bash + python3。
 
 
 
@@ -117,7 +117,7 @@ bash scripts/scan-paths.sh paths-context.md
 | 文件        | 路径                             |
 | --------- | ------------------------------ |
 | 路径上下文     | `paths-context.md`（同目录下，由脚本生成） |
-| 扫描脚本      | `scripts/scan-paths.sh`（仓库根目录） |
+| 扫描脚本      | `../scripts/scan-paths.sh`（仓库根目录） |
 | Task 格式规范 | `TASK-FORMAT.md`               |
 
 
