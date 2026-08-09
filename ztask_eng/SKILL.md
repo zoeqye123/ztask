@@ -41,6 +41,15 @@ Ask everything upfront in one pass:
 - **Any deadline?**
 - **Any existing resources?** Materials or references already available?
 
+**🧠 Core Mindset: First Principles Thinking**
+
+When clarifying, strip away surface framing and drill into the fundamental problem:
+
+- User says "build a dashboard" → Ask: "What metrics do you actually need to monitor? What do you need to see when making decisions?"
+- User says "optimize this workflow" → Ask: "Where exactly is it slowest? What's the bottleneck? How much improvement makes it worthwhile?"
+- User says "integrate tool X" → Ask: "What capability gap are you trying to fill? Is there a simpler solution?"
+- Don't take the user's request as a given. Start from scratch: what is the essence of solving this problem, regardless of existing constraints?
+
 ### Step 2: Read System Context
 
 - If `paths-context.md` exists in the current directory, read it first to understand the user's file structure and help infer the execution folder.
@@ -55,6 +64,12 @@ bash ../scripts/scan-paths.sh paths-context.md
 ### Step 3: Generate the Task
 
 Generate according to the template below. It **must include**: background, execution context, goals (checkboxes), phased steps, and acceptance criteria.
+
+**When designing the Task, apply first principles too:**
+
+- Don't fall into template thinking — what is the shortest path to completing this task?
+- Does the deliverable directly hit the core problem? Can fewer steps achieve the same outcome?
+- Is every Phase truly necessary? If you remove it, can the goal still be achieved?
 
 ```markdown
 # Task: {Domain} | {Description}
@@ -80,6 +95,17 @@ Generate according to the template below. It **must include**: background, execu
 - [ ] {Verifiable criterion 1}
 - [ ] {Verifiable criterion 2}
 ```
+
+### 🔍 Review: Adversarial Examination
+
+After generating the Task, review it from the perspective of the harshest critic:
+
+- **Assume every step will fail**: Where is it most likely to break? What's the fallback?
+- **Hunt for ambiguity**: Is there wiggle room in the acceptance criteria where things "look right" but aren't actually done?
+- **Challenge assumptions**: Do the external dependencies (environment, permissions, data) actually hold? What if they don't?
+- **Ask "and then what?" for every goal**: After acceptance criteria pass, does the deliverable truly solve the original problem?
+
+Based on the review, add boundary conditions, error handling, and sharpen the acceptance criteria.
 
 ### Step 4: Output
 
